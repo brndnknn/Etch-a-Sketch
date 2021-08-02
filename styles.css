@@ -1,7 +1,21 @@
 
+* {
+    padding: 0;
+    margin: 0;
+}
+
 
 #container{
-    display: grid;
-    grid-template-columns: auto auto auto auto auto auto auto
-     auto auto auto auto auto auto auto auto auto;
+    display: inline-grid;
+    border: 5px solid black;
+    
+}
+
+
+#shake {
+    min-width:  10%;
+    margin-left: 45%;
+    margin-right: 45%;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
