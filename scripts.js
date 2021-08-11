@@ -47,13 +47,13 @@ function createDivBoxes(){
         thisDiv.style.height = `${divSize}px`;
         thisDiv.style.width = `${divSize}px`;
         let numOfDiv = (i * divNum) + (j +1);
-        thisDiv.textContent = (numOfDiv);
+        //thisDiv.textContent = (numOfDiv);
         //thisDiv.style.backgroundColor = `hsl(${numOfDiv}, 100% ,50%)`;
         //console.log(thisDiv.style.backgroundColor);
         thisDiv.id = numOfDiv;
         thisDiv.className = 'boxes';
         container.append(thisDiv);
-        thisDiv.addEventListener('mouseenter', drawSketch);
+        //thisDiv.addEventListener('mouseenter', drawSketch);
         }
     }
     arrowSketch(currPixel);
@@ -69,15 +69,9 @@ function clearCanvas(){
 let currPixel = 350;
 
 function arrowSketch(pixelID){
-    //let currPixel = document.getElementById('350');
-    //currPixel.style.backgroundColor = "#F0F";
     document.getElementById(pixelID).style.backgroundColor = '#F0F';
 }
 
-function drawSketch(e){
-    //console.log(e.target);
-    //e.target.style.backgroundColor = '#000';
-}
 
 function shakeSketch(){
     clearCanvas();
@@ -89,38 +83,43 @@ createDivBoxes();
 
 document.getElementById('shake').addEventListener('click', shakeSketch);
 
+let vertical = false;
+let horizontal = false;
 
 document.onkeydown = function(e) {
     console.log(e);
+
         switch (e.keyCode) {
         case 37:
             console.log('Left Key pressed!');
-            if(!boundryCheck(2)){
+            if(!boundryCheck(2) && !horizontal){
             currPixel = currPixel - 1;
+            horizontal = true;
             }
 
-            /*
-             add something so currPixel can only respond to any keypress once
-             */
             break;
         case 38:
             console.log('Up Key pressed!');
-            if(!boundryCheck(0)){
+            if(!boundryCheck(0) && !vertical){
             currPixel = currPixel - 20;
+            vertical = true;
             }
             break;
         case 39:
             console.log('Right Key pressed!');
-            if(!boundryCheck(1)){
+            if(!boundryCheck(1) && !horizontal){
             currPixel = currPixel + 1;
+            horizontal = true;
             }
             break;
         case 40:
             console.log('Down Key pressed!');
-            if(!boundryCheck(3)){
+            if(!boundryCheck(3) && !vertical){
             currPixel = currPixel + 20;
-            break;}
+            vertical = true;}
+            break;
     }
+   
     
 };
 
@@ -147,4 +146,7 @@ function boundryCheck(side) {
 document.onkeyup = function(e){
     console.log(e);
     arrowSketch(currPixel);
+    horizontal = false;
+    vertical = false;
+
 };

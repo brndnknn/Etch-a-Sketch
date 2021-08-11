@@ -1,0 +1,12 @@
+
+
+add a border for the current picture
+add color change functionalty
+    - random color button?
+    - enter a hexcode?
+    - both?
+
+can shaking the mouse over the frame act to reset it?
+add changing canvas size
+    choose between three sets of dimensions
+
