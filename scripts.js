@@ -9,10 +9,15 @@ let divSize;
 
 function createColumns(){
     let colNum = '';
+    let rowNum = '';
     for(let i = 0; i < divNum; i++){
-        colNum = colNum + "auto ";}
+        colNum = colNum + "auto ";
+    }
+    for(let i = 0; i < divNum; i++){
+        rowNum = rowNum + "auto ";
+    }
     container.style.gridTemplateColumns = colNum;
-    container.style.gridTemplateRows = colNum;
+    container.style.gridTemplateRows = rowNum;
     }
 
 
@@ -42,7 +47,7 @@ function createDivBoxes(){
         thisDiv.style.height = `${divSize}px`;
         thisDiv.style.width = `${divSize}px`;
         let numOfDiv = (i * divNum) + (j +1);
-        //thisDiv.textContent = (i * divNum ) + (j +1);
+        thisDiv.textContent = (numOfDiv);
         //thisDiv.style.backgroundColor = `hsl(${numOfDiv}, 100% ,50%)`;
         //console.log(thisDiv.style.backgroundColor);
         thisDiv.id = numOfDiv;
@@ -51,6 +56,7 @@ function createDivBoxes(){
         thisDiv.addEventListener('mouseenter', drawSketch);
         }
     }
+    arrowSketch(currPixel);
 }
 
 function clearCanvas(){
@@ -58,11 +64,19 @@ function clearCanvas(){
         
     container.removeChild(container.firstElementChild);
     }
+
+}
+let currPixel = 350;
+
+function arrowSketch(pixelID){
+    //let currPixel = document.getElementById('350');
+    //currPixel.style.backgroundColor = "#F0F";
+    document.getElementById(pixelID).style.backgroundColor = '#F0F';
 }
 
 function drawSketch(e){
-    console.log(e);
-    e.target.style.backgroundColor = '#000';
+    //console.log(e.target);
+    //e.target.style.backgroundColor = '#000';
 }
 
 function shakeSketch(){
@@ -74,3 +88,63 @@ function shakeSketch(){
 createDivBoxes();
 
 document.getElementById('shake').addEventListener('click', shakeSketch);
+
+
+document.onkeydown = function(e) {
+    console.log(e);
+        switch (e.keyCode) {
+        case 37:
+            console.log('Left Key pressed!');
+            if(!boundryCheck(2)){
+            currPixel = currPixel - 1;
+            }
+
+            /*
+             add something so currPixel can only respond to any keypress once
+             */
+            break;
+        case 38:
+            console.log('Up Key pressed!');
+            if(!boundryCheck(0)){
+            currPixel = currPixel - 20;
+            }
+            break;
+        case 39:
+            console.log('Right Key pressed!');
+            if(!boundryCheck(1)){
+            currPixel = currPixel + 1;
+            }
+            break;
+        case 40:
+            console.log('Down Key pressed!');
+            if(!boundryCheck(3)){
+            currPixel = currPixel + 20;
+            break;}
+    }
+    
+};
+
+let boundryArr = [[],[],[],[]];
+function fillBoundryArr(){
+    for (let i = 0; i < divNum; i++){
+        boundryArr[0].push(i+1);
+        boundryArr[1].push((i+1)*divNum);
+        boundryArr[2].push(i*divNum + 1);
+        boundryArr[3].push(divNum*divNum-i); 
+    }
+    console.log(boundryArr);
+}
+fillBoundryArr();
+
+function boundryCheck(side) {
+    for(let i = 0; i < divNum; i++){
+        console.log(boundryArr[side][i]);
+        if (boundryArr[side][i] == currPixel)
+        return true;
+    }
+}
+
+document.onkeyup = function(e){
+    console.log(e);
+    arrowSketch(currPixel);
+};
